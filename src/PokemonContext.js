@@ -4,17 +4,24 @@ const PokemonContext = createContext();
 
 export const PokemonProvider = ({ children }) => {
   const [pokemonList, setPokemonList] = useState([]);
+  const [types, setTypes] = useState([]);
 
   useEffect(() => {
     // Appelle l'API pour récupérer la liste des Pokémon
     fetch('https://pokedex-api.3rgo.tech/api/pokemon')
       .then(response => response.json())
       .then(data => setPokemonList(data.data))
-      .catch(error => console.error('Error fetching data:', error));
+      .catch(error => console.error('Error fetching Pokémon data:', error));
+
+    // Appelle l'API pour récupérer la liste des types de Pokémon
+    fetch('https://pokedex-api.3rgo.tech/api/types')
+      .then(response => response.json())
+      .then(data => setTypes(data.data))
+      .catch(error => console.error('Error fetching types data:', error));
   }, []);
 
   return (
-    <PokemonContext.Provider value={{ pokemonList }}>
+    <PokemonContext.Provider value={{ pokemonList, types }}>
       {children}
     </PokemonContext.Provider>
   );

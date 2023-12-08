@@ -1,34 +1,53 @@
 .main {
-  /* Ajoute ici des styles spécifiques pour la partie principale de ton application */
-  .font-size-16 {
-    font-size: 16px;
+  padding: 20px;
+
+  h2 {
+    text-align: center;
   }
 
-  ul {
+  .pokemon-grid {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around; /* Ajuste cela selon tes préférences */
+    justify-content: space-around;
   }
 
-  li {
-    /* Styles pour chaque élément de la liste de Pokémon */
-    margin-bottom: 20px;
+  .pokemon-grid li {
     text-align: center;
-    width: 250px; /* Ajuste la largeur de chaque élément selon tes besoins */
+    width: 250px;
+    margin-bottom: 20px;
   }
 
-  img {
+  .pokemon-grid img {
     max-width: 100%;
     height: auto;
   }
 
-  /* Ajoute des règles de médias pour rendre la grille responsive */
+  .pokemon-grid p {
+    margin: 5px 0;
+  }
+
+  .pokemon-types {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .pokemon-type {
+    margin: 0 5px;
+  }
+
+  .pokemon-type img {
+    max-width: 100%;
+    height: auto;
+  }
+
   @media screen and (max-width: 768px) {
-    li {
-      width: 100%; /* Sur les écrans plus petits, occupe la largeur complète */
+    .pokemon-grid li {
+      width: 100%;
     }
   }
 }
