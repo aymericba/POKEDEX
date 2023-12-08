@@ -1,30 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { usePokemonContext } from '../PokemonContext.js';
 
-const MainContent = () => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const apiUrl = 'https://pokedex-api.3rgo.tech/';
-    
-    axios.get(apiUrl)
-      .then(response => {
-        setData(response.data);
-      })
-      .catch(error => {
-        console.error('Erreur de requête API', error);
-      });
-  }, []);
+const Main = () => {
+  const { pokemonList } = usePokemonContext();
 
   return (
-    <main>
+    <div className="main">
+      <h2>Liste des Pokémon</h2>
       <ul>
-        {data.map(item => (
-          <li key={item.id}>{item.name}</li>
+        {pokemonList.map(pokemon => (
+          <li key={pokemon.id}>
+            <img src={pokemon.image} alt={pokemon.name.en} />
+            <p>{pokemon.name.en}</p>
+          </li>
         ))}
       </ul>
-    </main>
+    </div>
   );
 };
 
-export default MainContent;
+export default Main;

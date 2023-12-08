@@ -1,0 +1,14 @@
+.header {
+    /* Ajoute ici des styles spécifiques pour le header, en utilisant les classes existantes */
+    .flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  
+    .font-size-16 {
+      font-size: 16px;
+    }
+  }
+  
+  

@@ -1,15 +1,19 @@
 import React from 'react';
 import Header from './components/header';
 import Main from './components/main';
-import SearchBar from './components/searchbar'
+import { PokemonProvider } from './PokemonContext.js';
+import './App.css';
+import './components/header.css';
+import './components/main.css';
 
 function App() {
   return (
-    <div className="body">
-      <Header />
-      {/* <SearchBar/> */}
-      <Main />
-    </div>
+    <PokemonProvider>
+      <div className="App">
+        <Header />
+        <Main />
+      </div>
+    </PokemonProvider>
   );
 }
 

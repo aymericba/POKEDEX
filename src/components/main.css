@@ -1,0 +1,34 @@
+.main {
+  /* Ajoute ici des styles spécifiques pour la partie principale de ton application */
+  .font-size-16 {
+    font-size: 16px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Ajuste cela selon tes préférences */
+  }
+
+  li {
+    /* Styles pour chaque élément de la liste de Pokémon */
+    margin-bottom: 20px;
+    text-align: center;
+    width: 250px; /* Ajuste la largeur de chaque élément selon tes besoins */
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Ajoute des règles de médias pour rendre la grille responsive */
+  @media screen and (max-width: 768px) {
+    li {
+      width: 100%; /* Sur les écrans plus petits, occupe la largeur complète */
+    }
+  }
+}
