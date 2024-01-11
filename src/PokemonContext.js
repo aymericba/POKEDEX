@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-
 const PokemonContext = createContext();
 
 export const PokemonProvider = ({ children }) => {
