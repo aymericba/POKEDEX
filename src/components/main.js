@@ -1,59 +1,61 @@
 import React, { useState } from 'react';
 import { usePokemonContext } from '../PokemonContext';
 
+const PokemonItem = ({ pokemon, types }) => (
+  <li key={pokemon.id}>
+    <img src={pokemon.image} alt={pokemon.name.en} />
+    <p>{`${pokemon.name.en} #${pokemon.id}`}</p>
+    <p>Génération {pokemon.generation}</p>
+    <div className="pokemon-types">
+      {pokemon.types.map((typeId) => {
+        const type = types.find((t) => t.id === typeId);
+        return (
+          <div key={type.id} className="pokemon-type">
+            <img src={type.image} alt={type.name.en} />
+          </div>
+        );
+      })}
+    </div>
+  </li>
+);
+
 const Main = () => {
   const { pokemonList, types } = usePokemonContext();
-  const [sortedPokemonList, setSortedPokemonList] = useState([...pokemonList]);
+  const [sortOption, setSortOption] = useState('id'); // Par défaut, trier par numéro
 
-  const handleSort = (property) => {
-    let sortedList = [...sortedPokemonList];
+  const sortPokemonList = () => {
+    return [...pokemonList].sort((a, b) => {
+      if (sortOption === 'name') {
+        return a.name.en.localeCompare(b.name.en);
+      } else if (sortOption === 'weight') {
+        return a.weight - b.weight;
+      } else if (sortOption === 'height') {
+        return a.height - b.height;
+      } else {
+        return a.id - b.id; // Par défaut, trier par numéro
+      }
+    });
+  };
 
-    switch (property) {
-      case 'number':
-        sortedList.sort((a, b) => a.id - b.id);
-        break;
-      case 'alphabetical':
-        sortedList.sort((a, b) => a.name.en.localeCompare(b.name.en));
-        break;
-      case 'weight':
-        sortedList.sort((a, b) => a.weight - b.weight);
-        break;
-      case 'height':
-        sortedList.sort((a, b) => a.height - b.height);
-        break;
-      default:
-        break;
-    }
-
-    setSortedPokemonList(sortedList);
+  const handleSortChange = (event) => {
+    setSortOption(event.target.value);
   };
 
   return (
     <div className="main">
       <h2>Liste des Pokémon</h2>
-      <div className="sort-buttons">
-        <button onClick={() => handleSort('number')}>Trier par Numéro</button>
-        <button onClick={() => handleSort('alphabetical')}>Trier par Ordre Alphabétique</button>
-        <button onClick={() => handleSort('weight')}>Trier par Poids</button>
-        <button onClick={() => handleSort('height')}>Trier par Taille</button>
+      <div>
+        <label htmlFor="sort">Trier par : </label>
+        <select id="sort" onChange={handleSortChange} value={sortOption}>
+          <option value="id">Numéro</option>
+          <option value="name">Ordre alphabétique</option>
+          <option value="weight">Poids</option>
+          <option value="height">Taille</option>
+        </select>
       </div>
       <ul className="pokemon-grid">
-        {sortedPokemonList.map((pokemon) => (
-          <li key={pokemon.id}>
-            <img src={pokemon.image} alt={pokemon.name.en} />
-            <p>{`${pokemon.name.en} #${pokemon.id}`}</p>
-            <p>Génération {pokemon.generation}</p>
-            <div className="pokemon-types">
-              {pokemon.types.map((typeId) => {
-                const type = types.find((t) => t.id === typeId);
-                return (
-                  <div key={type.id} className="pokemon-type">
-                    <img src={type.image} alt={type.name.en} />
-                  </div>
-                );
-              })}
-            </div>
-          </li>
+        {sortPokemonList().map((pokemon) => (
+          <PokemonItem key={pokemon.id} pokemon={pokemon} types={types} />
         ))}
       </ul>
     </div>
