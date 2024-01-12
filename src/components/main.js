@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { usePokemonContext } from '../PokemonContext';
 import SearchBar from './searchbar';
+import Popup from './Popup';
 
-const PokemonItem = ({ pokemon, types }) => (
-  <li key={pokemon.id}>
+const PokemonItem = ({ pokemon, types, onSelect }) => (
+  <li key={pokemon.id} onClick={() => onSelect && onSelect(pokemon)}>
     <img src={pokemon.image} alt={pokemon.name.en} />
     <p>{`${pokemon.name.en} #${pokemon.id}`}</p>
     <p>Génération {pokemon.generation}</p>
@@ -28,6 +29,7 @@ const Main = () => {
   });
   const [filterGeneration, setFilterGeneration] = useState('all');
   const [filterType, setFilterType] = useState('all');
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
 
   const sortPokemonList = () => {
     return [...pokemonList]
@@ -110,9 +112,13 @@ const Main = () => {
       </div>
       <ul className="pokemon-grid">
         {sortPokemonList().map((pokemon) => (
-          <PokemonItem key={pokemon.id} pokemon={pokemon} types={types} />
+          <PokemonItem key={pokemon.id} 
+          pokemon={pokemon} 
+          types={types} 
+          onSelect={(selectedPokemon) => setSelectedPokemon(selectedPokemon)} />
         ))}
       </ul>
+      {selectedPokemon && <Popup pokemon={selectedPokemon} />}
     </div>
   );
 };
