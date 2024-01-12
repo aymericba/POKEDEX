@@ -4,8 +4,8 @@ import SearchBar from './searchbar';
 import Popup from './Popup';
 
 // Composant représentant un élément Pokémon dans la liste
-const PokemonItem = ({ pokemon, types }) => (
-  <li key={pokemon.id}>
+const PokemonItem = ({ pokemon, types, onSelect }) => (
+  <li key={pokemon.id} onClick={() => onSelect && onSelect(pokemon)}>
     <img src={pokemon.image} alt={pokemon.name.en} />
     <p>{`${pokemon.name.en} #${pokemon.id}`}</p>
     <p>Génération {pokemon.generation}</p>
