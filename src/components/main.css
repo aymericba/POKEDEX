@@ -1,5 +1,6 @@
 .main {
   padding: 20px;
+}
 
   h2 {
     text-align: center;
@@ -50,7 +51,7 @@
       width: 100%;
     }
   }
-}
+
 
 #search {
   padding: 5px;
