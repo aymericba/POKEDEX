@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { usePokemonContext } from '../PokemonContext';
 import SearchBar from './searchbar';
 
-const [searchTerm, setSearchTerm] = useState('');
-
 const PokemonItem = ({ pokemon, types }) => (
   <li key={pokemon.id}>
     <img src={pokemon.image} alt={pokemon.name.en} />
@@ -35,9 +33,9 @@ const Main = () => {
     return [...pokemonList]
       .filter((pokemon) => (filterGeneration === 'all' || pokemon.generation === parseInt(filterGeneration, 10)))
       .filter((pokemon) => (filterType === 'all' || pokemon.types.includes(parseInt(filterType, 10))))
-      .filter((pokemon) =>
-      pokemon.name.en.toLowerCase().includes(searchTerm.toLowerCase())
-    )
+    //   .filter((pokemon) =>
+    //   pokemon.name.en.toLowerCase().includes(searchTerm.toLowerCase())
+    // )
       .sort((a, b) => {
         const compareValue = (field) => {
           if (field === 'name') {
