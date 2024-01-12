@@ -21,7 +21,7 @@ const PokemonItem = ({ pokemon, types }) => (
 );
 
 const Main = () => {
-  const { pokemonList, types } = usePokemonContext();
+  const { pokemonList, types, searchTerm } = usePokemonContext();
   const [sortOption, setSortOption] = useState({
     field: 'id',
     order: 'asc',
@@ -33,9 +33,9 @@ const Main = () => {
     return [...pokemonList]
       .filter((pokemon) => (filterGeneration === 'all' || pokemon.generation === parseInt(filterGeneration, 10)))
       .filter((pokemon) => (filterType === 'all' || pokemon.types.includes(parseInt(filterType, 10))))
-    //   .filter((pokemon) =>
-    //   pokemon.name.en.toLowerCase().includes(searchTerm.toLowerCase())
-    // )
+       .filter((pokemon) =>
+       pokemon.name.en.toLowerCase().includes(searchTerm.toLowerCase())
+    )
       .sort((a, b) => {
         const compareValue = (field) => {
           if (field === 'name') {
@@ -70,7 +70,6 @@ const Main = () => {
   return (
     <div className="main">
       <h2>Liste des Pokémon</h2>
-      <SearchBar/>
       <div>
         <label htmlFor="sort">Trier par : </label>
         <select id="sort" onChange={handleSortChange} value={sortOption.field}>

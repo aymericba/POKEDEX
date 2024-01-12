@@ -7,6 +7,7 @@ export const PokemonProvider = ({ children }) => {
   const [types, setTypes] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
+
   useEffect(() => {
     // Appelle l'API pour récupérer la liste des Pokémon
     fetch('https://pokedex-api.3rgo.tech/api/pokemon')
