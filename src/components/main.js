@@ -3,12 +3,14 @@ import { usePokemonContext } from '../PokemonContext';
 import SearchBar from './searchbar';
 import Popup from './Popup';
 
-const PokemonItem = ({ pokemon, types, onSelect }) => (
-  <li key={pokemon.id} onClick={() => onSelect && onSelect(pokemon)}>
+// Composant représentant un élément Pokémon dans la liste
+const PokemonItem = ({ pokemon, types }) => (
+  <li key={pokemon.id}>
     <img src={pokemon.image} alt={pokemon.name.en} />
     <p>{`${pokemon.name.en} #${pokemon.id}`}</p>
     <p>Génération {pokemon.generation}</p>
     <div className="pokemon-types">
+      {/* Affichage des types du Pokémon */}
       {pokemon.types.map((typeId) => {
         const type = types.find((t) => t.id === typeId);
         return (
@@ -21,23 +23,23 @@ const PokemonItem = ({ pokemon, types, onSelect }) => (
   </li>
 );
 
+// Composant principal représentant la liste des Pokémon avec des options de tri et de filtre
 const Main = () => {
+  // Utilisation du contexte Pokémon pour obtenir la liste des Pokémon, les types, et le terme de recherche
   const { pokemonList, types, searchTerm } = usePokemonContext();
-  const [sortOption, setSortOption] = useState({
-    field: 'id',
-    order: 'asc',
-  });
-  const [filterGeneration, setFilterGeneration] = useState('all');
-  const [filterType, setFilterType] = useState('all');
-  const [selectedPokemon, setSelectedPokemon] = useState(null);
 
+  // États locaux pour gérer les options de tri, filtres par génération et type
+  const [sortField, setSortField] = useState('id'); // Champ de tri par défaut
+  const [sortOrder, setSortOrder] = useState('asc'); // Ordre de tri par défaut
+  const [filterGeneration, setFilterGeneration] = useState('all'); // Filtre par génération
+  const [filterType, setFilterType] = useState('all'); // Filtre par type
+
+  // Fonction pour trier la liste des Pokémon en fonction des options actuelles
   const sortPokemonList = () => {
     return [...pokemonList]
       .filter((pokemon) => (filterGeneration === 'all' || pokemon.generation === parseInt(filterGeneration, 10)))
       .filter((pokemon) => (filterType === 'all' || pokemon.types.includes(parseInt(filterType, 10))))
-       .filter((pokemon) =>
-       pokemon.name.en.toLowerCase().includes(searchTerm.toLowerCase())
-    )
+      .filter((pokemon) => pokemon.name.en.toLowerCase().includes(searchTerm.toLowerCase()))
       .sort((a, b) => {
         const compareValue = (field) => {
           if (field === 'name') {
@@ -47,60 +49,70 @@ const Main = () => {
           }
         };
 
-        const result = compareValue(sortOption.field);
+        const result = compareValue(sortField);
 
-        return sortOption.order === 'asc' ? result : -result;
+        return sortOrder === 'asc' ? result : -result;
       });
   };
 
-  const handleSortChange = (event) => {
-    const field = event.target.value;
-    setSortOption((prevSortOption) => ({
-      field,
-      order: prevSortOption.field === field && prevSortOption.order === 'asc' ? 'desc' : 'asc',
-    }));
+  // Gestionnaire de changement pour le champ de tri
+  const handleSortFieldChange = (event) => {
+    setSortField(event.target.value);
   };
 
+  // Gestionnaire de changement pour l'ordre de tri
+  const handleSortOrderChange = (event) => {
+    setSortOrder(event.target.value);
+  };
+
+  // Gestionnaire de changement pour le filtre par génération
   const handleGenerationChange = (event) => {
     setFilterGeneration(event.target.value);
   };
 
+  // Gestionnaire de changement pour le filtre par type
   const handleTypeChange = (event) => {
     setFilterType(event.target.value);
   };
 
+  // Rendu du composant
   return (
     <div className="main">
       <h2>Liste des Pokémon</h2>
+      {/* Barre de recherche */}
+      <SearchBar />
+      {/* Sélection des options de tri et filtres */}
       <div>
-        <label htmlFor="sort">Trier par : </label>
-        <select id="sort" onChange={handleSortChange} value={sortOption.field}>
-          <option value="id">Numéro (Croissant)</option>
-          <option value="id-desc">Numéro (Décroissant)</option>
-          <option value="name">Ordre alphabétique (Croissant)</option>
-          <option value="name-desc">Ordre alphabétique (Décroissant)</option>
-          <option value="height">Taille (Croissant)</option>
-          <option value="height-desc">Taille (Décroissant)</option>
-          <option value="weight">Poids (Croissant)</option>
-          <option value="weight-desc">Poids (Décroissant)</option>
+        <label htmlFor="sortField">Trier par : </label>
+        {/* Menu déroulant pour le champ de tri */}
+        <select id="sortField" onChange={handleSortFieldChange} value={sortField}>
+          <option value="id">Numéro</option>
+          <option value="name">Ordre alphabétique</option>
+          <option value="height">Taille</option>
+          <option value="weight">Poids</option>
+        </select>
+        <label htmlFor="sortOrder">Ordre : </label>
+        {/* Menu déroulant pour l'ordre de tri */}
+        <select id="sortOrder" onChange={handleSortOrderChange} value={sortOrder}>
+          <option value="asc">Croissant</option>
+          <option value="desc">Décroissant</option>
         </select>
       </div>
       <div>
         <label htmlFor="generation">Filtrer par génération : </label>
+        {/* Menu déroulant pour le filtre par génération */}
         <select id="generation" onChange={handleGenerationChange} value={filterGeneration}>
           <option value="all">Toutes les générations</option>
-          <option value="1">Génération 1</option>
-          <option value="2">Génération 2</option>
-          <option value="3">Génération 3</option>
-          <option value="4">Génération 4</option>
-          <option value="3">Génération 5</option>
-          <option value="4">Génération 6</option>
-          <option value="3">Génération 7</option>
-          <option value="4">Génération 8</option>
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((generation) => (
+            <option key={generation} value={generation}>
+              Génération {generation}
+            </option>
+          ))}
         </select>
       </div>
       <div>
         <label htmlFor="type">Filtrer par type : </label>
+        {/* Menu déroulant pour le filtre par type */}
         <select id="type" onChange={handleTypeChange} value={filterType}>
           <option value="all">Tous les types</option>
           {types.map((type) => (
@@ -110,6 +122,7 @@ const Main = () => {
           ))}
         </select>
       </div>
+      {/* Liste des Pokémon rendue en fonction des options de tri et de filtre */}
       <ul className="pokemon-grid">
         {sortPokemonList().map((pokemon) => (
           <PokemonItem key={pokemon.id} 
