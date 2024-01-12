@@ -32,7 +32,8 @@ const Main = () => {
   const [sortField, setSortField] = useState('id'); // Champ de tri par défaut
   const [sortOrder, setSortOrder] = useState('asc'); // Ordre de tri par défaut
   const [filterGeneration, setFilterGeneration] = useState('all'); // Filtre par génération
-  const [filterType, setFilterType] = useState('all'); // Filtre par type
+  const [filterType, setFilterType] = useState('all');
+  const [selectedPokemon, setSelectedPokemon] = useState(null); // Filtre par type
 
   // Fonction pour trier la liste des Pokémon en fonction des options actuelles
   const sortPokemonList = () => {
