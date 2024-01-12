@@ -74,13 +74,12 @@
   background: #fff;
   padding: 20px;
   border-radius: 8px;
-  max-width: 400px;
-  width: 100%;
+  max-width: 60%;
   text-align: center;
 }
 
 .popup img {
-  max-width: 100%;
+  max-width: 70%;
   height: auto;
 }
 
@@ -91,4 +90,5 @@
   padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
+  margin-top: 10px; /* Ajoutez une marge pour séparer le bouton du reste du contenu */
 }

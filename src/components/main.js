@@ -133,7 +133,7 @@ const Main = () => {
         ))}
       </ul>
       {selectedPokemon && (
-        <Popup pokemon={selectedPokemon} onClose={() => setSelectedPokemon(null)} />
+        <Popup pokemon={selectedPokemon} onClose={() => setSelectedPokemon(null)} types={types}/>
       )}
     </div>
   );
