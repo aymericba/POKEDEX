@@ -8,7 +8,10 @@ const Popup = ({ pokemon, onClose }) => {
   const toggleShiny = () => {
     setIsShiny((prevIsShiny) => !prevIsShiny);
   };
-
+  const getEvolutionImage = (id) => {
+    const evolvedPokemon = pokemonList.find((p) => p.id === id);
+    return isShiny ? evolvedPokemon.image_shiny : evolvedPokemon.image;
+  };
   return (
     <div className="popup">
       <div className="popup-content">
@@ -35,6 +38,33 @@ const Popup = ({ pokemon, onClose }) => {
               <li>Vitesse: {pokemon.stats.vit}</li>
               <li>Attaque spéciale: {pokemon.stats.spe_atk}</li>
               <li>Défense spéciale: {pokemon.stats.spe_def}</li>
+            </ul>
+          </div>
+        )}
+        {pokemon.evolvedFrom && Object.keys(pokemon.evolvedFrom).length > 0 && (
+          <div>
+            <p>Évolué à partir de :</p>
+            <ul>
+              {Object.entries(pokemon.evolvedFrom).map(([id, condition]) => (
+                <li key={id}>
+                  <img src={getEvolutionImage(parseInt(id))} alt={`Evolved from #${id}`} />
+                  {`#${id}: ${condition}`}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {pokemon.evolvesTo && Object.keys(pokemon.evolvesTo).length > 0 && (
+          <div>
+            <p>Évolue vers :</p>
+            <ul>
+              {Object.entries(pokemon.evolvesTo).map(([id, condition]) => (
+                <li key={id}>
+                  <img src={getEvolutionImage(parseInt(id))} alt={`Evolves to #${id}`} />
+                  {`#${id}: ${condition}`}
+                </li>
+              ))}
             </ul>
           </div>
         )}
