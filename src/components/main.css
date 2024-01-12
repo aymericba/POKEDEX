@@ -71,16 +71,33 @@
 }
 
 .popup-content {
+  max-height: 90vh;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction:row;
+  justify-content: space-between; /* Distribue l'espace entre les éléments */
+  align-items: center;
   background: #fff;
   padding: 20px;
   border-radius: 8px;
-  max-width: 60%;
+  max-width: 70%; /* Ajustez la largeur maximale selon vos besoins */
   text-align: center;
 }
 
+@media screen and (max-width: 768px) {
+  .popup-content {
+    flex-direction: column;
+  }
+}
+
 .popup img {
-  max-width: 70%;
+  max-width: 40%;
   height: auto;
+}
+
+.popup-stats {
+  max-width: 40%; /* Ajustez la largeur des statistiques selon vos besoins */
+  text-align: left;
 }
 
 .popup button {
