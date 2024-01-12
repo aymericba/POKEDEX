@@ -118,7 +118,9 @@ const Main = () => {
           onSelect={(selectedPokemon) => setSelectedPokemon(selectedPokemon)} />
         ))}
       </ul>
-      {selectedPokemon && <Popup pokemon={selectedPokemon} />}
+      {selectedPokemon && (
+        <Popup pokemon={selectedPokemon} onClose={() => setSelectedPokemon(null)} />
+      )}
     </div>
   );
 };
