@@ -5,6 +5,7 @@ const PokemonContext = createContext();
 export const PokemonProvider = ({ children }) => {
   const [pokemonList, setPokemonList] = useState([]);
   const [types, setTypes] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     // Appelle l'API pour récupérer la liste des Pokémon
@@ -21,7 +22,7 @@ export const PokemonProvider = ({ children }) => {
   }, []);
 
   return (
-    <PokemonContext.Provider value={{ pokemonList, types }}>
+    <PokemonContext.Provider value={{ pokemonList, types, searchTerm, setSearchTerm }}>
       {children}
     </PokemonContext.Provider>
   );
