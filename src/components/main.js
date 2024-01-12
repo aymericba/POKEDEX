@@ -22,10 +22,8 @@ const PokemonItem = ({ pokemon, types }) => (
 
 const Main = () => {
   const { pokemonList, types, searchTerm } = usePokemonContext();
-  const [sortOption, setSortOption] = useState({
-    field: 'id',
-    order: 'asc',
-  });
+  const [sortField, setSortField] = useState('id');
+  const [sortOrder, setSortOrder] = useState('asc');
   const [filterGeneration, setFilterGeneration] = useState('all');
   const [filterType, setFilterType] = useState('all');
 
@@ -33,9 +31,7 @@ const Main = () => {
     return [...pokemonList]
       .filter((pokemon) => (filterGeneration === 'all' || pokemon.generation === parseInt(filterGeneration, 10)))
       .filter((pokemon) => (filterType === 'all' || pokemon.types.includes(parseInt(filterType, 10))))
-       .filter((pokemon) =>
-       pokemon.name.en.toLowerCase().includes(searchTerm.toLowerCase())
-    )
+      .filter((pokemon) => pokemon.name.en.toLowerCase().includes(searchTerm.toLowerCase()))
       .sort((a, b) => {
         const compareValue = (field) => {
           if (field === 'name') {
@@ -45,18 +41,18 @@ const Main = () => {
           }
         };
 
-        const result = compareValue(sortOption.field);
+        const result = compareValue(sortField);
 
-        return sortOption.order === 'asc' ? result : -result;
+        return sortOrder === 'asc' ? result : -result;
       });
   };
 
-  const handleSortChange = (event) => {
-    const field = event.target.value;
-    setSortOption((prevSortOption) => ({
-      field,
-      order: prevSortOption.field === field && prevSortOption.order === 'asc' ? 'desc' : 'asc',
-    }));
+  const handleSortFieldChange = (event) => {
+    setSortField(event.target.value);
+  };
+
+  const handleSortOrderChange = (event) => {
+    setSortOrder(event.target.value);
   };
 
   const handleGenerationChange = (event) => {
@@ -70,31 +66,30 @@ const Main = () => {
   return (
     <div className="main">
       <h2>Liste des Pokémon</h2>
+      <SearchBar />
       <div>
-        <label htmlFor="sort">Trier par : </label>
-        <select id="sort" onChange={handleSortChange} value={sortOption.field}>
-          <option value="id">Numéro (Croissant)</option>
-          <option value="id-desc">Numéro (Décroissant)</option>
-          <option value="name">Ordre alphabétique (Croissant)</option>
-          <option value="name-desc">Ordre alphabétique (Décroissant)</option>
-          <option value="height">Taille (Croissant)</option>
-          <option value="height-desc">Taille (Décroissant)</option>
-          <option value="weight">Poids (Croissant)</option>
-          <option value="weight-desc">Poids (Décroissant)</option>
+        <label htmlFor="sortField">Trier par : </label>
+        <select id="sortField" onChange={handleSortFieldChange} value={sortField}>
+          <option value="id">Numéro</option>
+          <option value="name">Ordre alphabétique</option>
+          <option value="height">Taille</option>
+          <option value="weight">Poids</option>
+        </select>
+        <label htmlFor="sortOrder">Ordre : </label>
+        <select id="sortOrder" onChange={handleSortOrderChange} value={sortOrder}>
+          <option value="asc">Croissant</option>
+          <option value="desc">Décroissant</option>
         </select>
       </div>
       <div>
         <label htmlFor="generation">Filtrer par génération : </label>
         <select id="generation" onChange={handleGenerationChange} value={filterGeneration}>
           <option value="all">Toutes les générations</option>
-          <option value="1">Génération 1</option>
-          <option value="2">Génération 2</option>
-          <option value="3">Génération 3</option>
-          <option value="4">Génération 4</option>
-          <option value="3">Génération 5</option>
-          <option value="4">Génération 6</option>
-          <option value="3">Génération 7</option>
-          <option value="4">Génération 8</option>
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((generation) => (
+            <option key={generation} value={generation}>
+              Génération {generation}
+            </option>
+          ))}
         </select>
       </div>
       <div>
