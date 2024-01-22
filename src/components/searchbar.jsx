@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 const SearchBar = () => {
   const { setSearchTerm } = usePokemonContext();
   const [localSearchTerm, setLocalSearchTerm] = useState('');
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const search = t('src');
   useEffect(() => {
     // Mettre à jour le terme de recherche dans le contexte lorsque localSearchTerm change

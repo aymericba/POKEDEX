@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { usePokemonContext } from '../PokemonContext';
 import { useTranslation } from 'react-i18next';
-import i18n from '../i18n';
 import SearchBar from './searchbar';
 
 import "/node_modules/flag-icons/css/flag-icons.min.css";
@@ -52,7 +51,6 @@ const PokemonItem = ({ pokemon, types, onSelect }) => {
 // Composant principal représentant la liste des Pokémon avec des options de tri et de filtre
 const Main = () => {
     const { t, i18n } = useTranslation();
-    const src = t('src')
     const filter = t('filter');
     const num = t('num');
     const alph = t('alph');

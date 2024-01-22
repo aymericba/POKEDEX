@@ -2,7 +2,6 @@ import React from 'react';
 import Header from './components/header';
 import Main from './components/main';
 import { PokemonProvider } from './PokemonContext.js';
-import SearchBar from './components/searchbar.jsx';
 import './App.css';
 import './components/header.css';
 import './components/main.css';
