@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { usePokemonContext } from '../PokemonContext';
 import { useTranslation } from 'react-i18next';
+import i18n from '../i18n';
 import SearchBar from './searchbar';
 
 import "/node_modules/flag-icons/css/flag-icons.min.css";
