@@ -8,6 +8,8 @@
     "order": "Ordre",
     "genFilter": "Filtrer par génération",
     "typeFilter": "Filtrer par type",
+    "typeall" : "Tous les types",
+    "genall" : "Toutes les générations",
     "list": "Liste des Pokémons",
     "gen": "Génération",
     "size": "Taille",

@@ -51,7 +51,23 @@ const PokemonItem = ({ pokemon, types, onSelect }) => {
 // Composant principal représentant la liste des Pokémon avec des options de tri et de filtre
 const Main = () => {
     const { t, i18n } = useTranslation();
+    const src = t('src')
     const filter = t('filter');
+    const num = t('num');
+    const alph = t('alph');
+    const asc = t('asc');
+    const dsc = t('dsc');
+    const order = t('order');
+    const genFilter = t('genFilter');
+    const typeFilter = t('typeFilter');
+    const typeall = t('typeall');
+    const genall = t('genall');
+    const list = t('list');
+    const gen = t('gen');
+    const size = t('size');
+    const weight = t('weight');
+
+
 
   // Utilisation du contexte Pokémon pour obtenir la liste des Pokémon, les types, et le terme de recherche
   const { pokemonList, types, searchTerm } = usePokemonContext();
@@ -112,7 +128,7 @@ const Main = () => {
       <button onClick={() => i18n.changeLanguage('en')}><span class="fi fi-us"></span></button>
       <button onClick={() => i18n.changeLanguage('fr')}><span class="fi fi-yt"></span></button>
     </div>
-      <h2>Liste des Pokémon</h2>
+      <h2>{list}</h2>
       {/* Barre de recherche */}
       <SearchBar />
       {/* Sélection des options de tri et filtres */}
@@ -120,35 +136,35 @@ const Main = () => {
         <label htmlFor="sortField">{filter} : </label>
         {/* Menu déroulant pour le champ de tri */}
         <select id="sortField" onChange={handleSortFieldChange} value={sortField}>
-          <option value="id">Numéro</option>
-          <option value="name">Ordre alphabétique</option>
-          <option value="height">Taille</option>
-          <option value="weight">Poids</option>
+          <option value="id">{num}</option>
+          <option value="name">{alph}</option>
+          <option value="height">{size}</option>
+          <option value="weight">{weight}</option>
         </select>
-        <label htmlFor="sortOrder">Ordre : </label>
+        <label htmlFor="sortOrder">{order} : </label>
         {/* Menu déroulant pour l'ordre de tri */}
         <select id="sortOrder" onChange={handleSortOrderChange} value={sortOrder}>
-          <option value="asc">Croissant</option>
-          <option value="desc">Décroissant</option>
+          <option value="asc">{asc}</option>
+          <option value="desc">{dsc}</option>
         </select>
       </div>
       <div>
-        <label htmlFor="generation">Filtrer par génération : </label>
+        <label htmlFor="generation">{genFilter} : </label>
         {/* Menu déroulant pour le filtre par génération */}
         <select id="generation" onChange={handleGenerationChange} value={filterGeneration}>
-          <option value="all">Toutes les générations</option>
+          <option value="all">{genall}</option>
           {[1, 2, 3, 4, 5, 6, 7, 8].map((generation) => (
             <option key={generation} value={generation}>
-              Génération {generation}
+              {gen} {generation}
             </option>
           ))}
         </select>
       </div>
       <div>
-        <label htmlFor="type">Filtrer par type : </label>
+        <label htmlFor="type">{typeFilter} : </label>
         {/* Menu déroulant pour le filtre par type */}
         <select id="type" onChange={handleTypeChange} value={filterType}>
-          <option value="all">Tous les types</option>
+          <option value="all">{typeall}</option>
           {types.map((type) => (
             <option key={type.id} value={type.id}>
               {type.name.en}
