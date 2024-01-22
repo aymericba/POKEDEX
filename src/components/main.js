@@ -12,6 +12,7 @@ const PokemonItem = ({ pokemon, types, onSelect }) => {
   const { t, i18n } = useTranslation();
   const currentLang = i18n.language;
   let pokename;
+  const gen = t('gen');
 
   if (currentLang === "fr") {
     pokename = pokemon.name.fr;
@@ -24,7 +25,7 @@ const PokemonItem = ({ pokemon, types, onSelect }) => {
   <li key={pokemon.id} onClick={() => onSelect && onSelect(pokemon)}>
     <img src={pokemon.image} alt={pokename} />
     <p>{`${pokename} #${pokemon.id}`}</p>
-    <p>Génération {pokemon.generation}</p>
+    <p>{gen} {pokemon.generation}</p>
     <div className="pokemon-types">
       {/* Affichage des types du Pokémon */}
       {pokemon.types.map((typeId) => {
