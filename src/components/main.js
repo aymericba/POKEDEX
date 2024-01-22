@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { usePokemonContext } from '../PokemonContext';
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n';
 import SearchBar from './searchbar';
+
+import "/node_modules/flag-icons/css/flag-icons.min.css";
 import Popup from './Popup';
 
 // Composant représentant un élément Pokémon dans la liste
@@ -25,6 +29,12 @@ const PokemonItem = ({ pokemon, types, onSelect }) => (
 
 // Composant principal représentant la liste des Pokémon avec des options de tri et de filtre
 const Main = () => {
+  //Utilisation du module I18n pour faire des traductions
+  const { t } = useTranslation();
+
+  const search = t('src');
+  const filter = t('filter');
+
   // Utilisation du contexte Pokémon pour obtenir la liste des Pokémon, les types, et le terme de recherche
   const { pokemonList, types, searchTerm } = usePokemonContext();
 
@@ -78,13 +88,18 @@ const Main = () => {
 
   // Rendu du composant
   return (
+    
     <div className="main">
+      <div>
+      <button onClick={() => i18n.changeLanguage('en')}><span class="fi fi-us"></span></button>
+      <button onClick={() => i18n.changeLanguage('fr')}><span class="fi fi-yt"></span></button>
+    </div>
       <h2>Liste des Pokémon</h2>
       {/* Barre de recherche */}
       <SearchBar />
       {/* Sélection des options de tri et filtres */}
       <div>
-        <label htmlFor="sortField">Trier par : </label>
+        <label htmlFor="sortField">{filter} : </label>
         {/* Menu déroulant pour le champ de tri */}
         <select id="sortField" onChange={handleSortFieldChange} value={sortField}>
           <option value="id">Numéro</option>
