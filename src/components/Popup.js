@@ -17,8 +17,21 @@ const Popup = ({ pokemon, onClose }) => {
   };
   const { t, i18n } = useTranslation();
   const currentLang = i18n.language;
-  const search = t('src');
-  const filter = t('filter');
+    const lvl = t('lvl');
+    const evolve = t('evolve');
+    const defSpe = t('defSpe');
+    const atkSpe = t('atkSpe');
+    const def = t('def');
+    const atk = t('atk');
+    const health = t('health');
+    const type = t('type');
+    const stats = t('stats');
+    const gen = t('gen');
+    const size = t('size');
+    const weight = t('weight');
+    const spd = t('spd');
+    const evolveFrom = t('evolveFrom');
+    const close = t("close");
   let pokename;
   if (currentLang === "fr"){
     pokename = pokemon.name.fr;
@@ -38,31 +51,31 @@ const Popup = ({ pokemon, onClose }) => {
           </header>
           <img src={isShiny ? pokemon.image_shiny : pokemon.image} alt={pokename} />
           <p>{`${pokename} #${pokemon.id}`}</p>
-          <p>Génération: {pokemon.generation}</p>
-          <p>Taille: {pokemon.height} m</p>
-          <p>Poids: {pokemon.weight} kg</p>
-          <p>Types: {pokemon.types.map((typeId) => types.find((t) => t.id === typeId).name.en).join(', ')}</p>
+          <p>{gen} : {pokemon.generation}</p>
+          <p>{size} : {pokemon.height} m</p>
+          <p>{weight} : {pokemon.weight} kg</p>
+          <p>{type} : {pokemon.types.map((typeId) => types.find((t) => t.id === typeId).name.en).join(', ')}</p>
         </div>
 
         <div>
           {/* Vérifiez si les statistiques existent avant de les afficher */}
           {pokemon.stats && (
             <div>
-              <p>Statistiques:</p>
+              <p>{stats}:</p>
               <ul>
-                <li>HP: {pokemon.stats.hp}</li>
-                <li>Attaque: {pokemon.stats.atk}</li>
-                <li>Défense: {pokemon.stats.def}</li>
-                <li>Vitesse: {pokemon.stats.vit}</li>
-                <li>Attaque spéciale: {pokemon.stats.spe_atk}</li>
-                <li>Défense spéciale: {pokemon.stats.spe_def}</li>
+                <li>{health}: {pokemon.stats.hp}</li>
+                <li>{atk}: {pokemon.stats.atk}</li>
+                <li>{def}: {pokemon.stats.def}</li>
+                <li>{spd}: {pokemon.stats.vit}</li>
+                <li>{atkSpe}: {pokemon.stats.spe_atk}</li>
+                <li>{defSpe} : {pokemon.stats.spe_def}</li>
               </ul>
             </div>
           )}
 
           {pokemon.evolvedFrom && Object.keys(pokemon.evolvedFrom).length > 0 && (
             <div>
-              <p>Évolué à partir de :</p>
+              <p>{evolveFrom} :</p>
               <ul>
                 {Object.entries(pokemon.evolvedFrom).map(([id, condition]) => (
                   <li key={id}>
@@ -76,19 +89,19 @@ const Popup = ({ pokemon, onClose }) => {
 
           {pokemon.evolvesTo && Object.keys(pokemon.evolvesTo).length > 0 && (
             <div>
-              <p>Évolue vers :</p>
+              <p>{evolve} :</p>
               <ul>
                 {Object.entries(pokemon.evolvesTo).map(([id, condition]) => (
                   <li key={id}>
                     <img src={getEvolutionImage(parseInt(id))} alt={`Evolves to #${id}`} />
-                    {`#${id}: ${condition}`}
+                    {`#${id} : ${condition}`}
                   </li>
                 ))}
               </ul>
             </div>
           )}
 
-          <button onClick={onClose}>Fermer</button>
+          <button onClick={onClose}>{close}</button>
         </div>
       </div>
     </div>

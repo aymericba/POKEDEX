@@ -19,8 +19,11 @@
     "health": "HP",
     "atk": "Attaque",
     "def": "Défense",
+    "spd": "Vitesse",
     "atkSpe": "Attaque spéciale",
     "defSpe": "Défense spéciale",
     "evolve": "Évolue vers",
-    "lvl" : "Niveau"
+    "evolveFrom": "Évolué de",
+    "lvl" : "Niveau",
+    "close": "Fermer"
 }
