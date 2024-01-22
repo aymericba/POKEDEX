@@ -12,7 +12,6 @@ function App() {
     <PokemonProvider>
       <div className="App">
         <Header />
-        <SearchBar/>
         <Main />
       </div>
     </PokemonProvider>

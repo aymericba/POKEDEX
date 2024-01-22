@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { usePokemonContext } from '../PokemonContext';
+import { useTranslation } from 'react-i18next';
 
 const SearchBar = () => {
   const { setSearchTerm } = usePokemonContext();
   const [localSearchTerm, setLocalSearchTerm] = useState('');
-
+  const { t, i18n } = useTranslation();
+  const search = t('src');
   useEffect(() => {
     // Mettre à jour le terme de recherche dans le contexte lorsque localSearchTerm change
     setSearchTerm(localSearchTerm);
@@ -16,7 +18,7 @@ const SearchBar = () => {
 
   return (
     <div>
-      <label htmlFor="search">Rechercher : </label>
+      <label htmlFor="search">{search} : </label>
       <input
         type="text"
         id="search"
