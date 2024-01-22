@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { usePokemonContext } from '../PokemonContext';
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n';
 
 const Popup = ({ pokemon, onClose }) => {
   const [isShiny, setIsShiny] = useState(false);
@@ -13,7 +15,20 @@ const Popup = ({ pokemon, onClose }) => {
     const evolvedPokemon = pokemonList.find((p) => p.id === id); // Utilisez pokemonList ici
     return isShiny ? evolvedPokemon.image_shiny : evolvedPokemon.image;
   };
-
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language;
+  const search = t('src');
+  const filter = t('filter');
+  let pokename;
+  if (currentLang === "fr"){
+    pokename = pokemon.name.fr;
+  }
+  else if(currentLang === "en"){
+    pokename = pokemon.name.en;
+  }
+  else{
+    pokename = pokemon.name;
+  }
   return (
     <div className="popup">
       <div className="popup-content">
@@ -21,8 +36,8 @@ const Popup = ({ pokemon, onClose }) => {
           <header>
             <button onClick={toggleShiny}>Shiny</button>
           </header>
-          <img src={isShiny ? pokemon.image_shiny : pokemon.image} alt={pokemon.name.en} />
-          <p>{`${pokemon.name.en} #${pokemon.id}`}</p>
+          <img src={isShiny ? pokemon.image_shiny : pokemon.image} alt={pokename} />
+          <p>{`${pokename} #${pokemon.id}`}</p>
           <p>Génération: {pokemon.generation}</p>
           <p>Taille: {pokemon.height} m</p>
           <p>Poids: {pokemon.weight} kg</p>

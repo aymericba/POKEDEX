@@ -8,32 +8,50 @@ import "/node_modules/flag-icons/css/flag-icons.min.css";
 import Popup from './Popup';
 
 // Composant représentant un élément Pokémon dans la liste
-const PokemonItem = ({ pokemon, types, onSelect }) => (
+const PokemonItem = ({ pokemon, types, onSelect }) => {
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language;
+  let pokename;
+
+  if (currentLang === "fr") {
+    pokename = pokemon.name.fr;
+  } else if (currentLang === "en") {
+    pokename = pokemon.name.en;
+  } else {
+    pokename = pokemon.name;
+  }
+  return(
   <li key={pokemon.id} onClick={() => onSelect && onSelect(pokemon)}>
-    <img src={pokemon.image} alt={pokemon.name.en} />
-    <p>{`${pokemon.name.en} #${pokemon.id}`}</p>
+    <img src={pokemon.image} alt={pokename} />
+    <p>{`${pokename} #${pokemon.id}`}</p>
     <p>Génération {pokemon.generation}</p>
     <div className="pokemon-types">
       {/* Affichage des types du Pokémon */}
       {pokemon.types.map((typeId) => {
         const type = types.find((t) => t.id === typeId);
+        let typename;
+        if (currentLang === "fr") {
+          typename = type.name.fr;
+        } else if (currentLang === "en") {
+          typename = type.name.en;
+        } else {
+          typename = type.name;
+        }
         return (
           <div key={type.id} className="pokemon-type">
-            <img src={type.image} alt={type.name.en} />
+            <img src={type.image} alt={typename} />
           </div>
         );
       })}
     </div>
   </li>
-);
+  )
+};
 
 // Composant principal représentant la liste des Pokémon avec des options de tri et de filtre
 const Main = () => {
-  //Utilisation du module I18n pour faire des traductions
-  const { t } = useTranslation();
-
-  const search = t('src');
-  const filter = t('filter');
+    const { t, i18n } = useTranslation();
+    const filter = t('filter');
 
   // Utilisation du contexte Pokémon pour obtenir la liste des Pokémon, les types, et le terme de recherche
   const { pokemonList, types, searchTerm } = usePokemonContext();
