@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { usePokemonContext } from '../PokemonContext';
 import { useTranslation } from 'react-i18next';
-import i18n from '../i18n';
-
-const Popup = ({ pokemon, onClose }) => {
+const Popup = ({ pokemon, typeId, onClose }) => {
   const [isShiny, setIsShiny] = useState(false);
   const { types, pokemonList } = usePokemonContext(); // Ajoutez pokemonList ici
+
+  const { t, i18n } = useTranslation();
+  const [currentLang, setCurrentLang] = useState(i18n.language);
+
+  // Utilisation du hook useEffect pour mettre à jour currentLang lorsque la langue change
+  useEffect(() => {
+    setCurrentLang(i18n.language);
+  }, [i18n.language]);
 
   const toggleShiny = () => {
     setIsShiny((prevIsShiny) => !prevIsShiny);
@@ -15,9 +21,21 @@ const Popup = ({ pokemon, onClose }) => {
     const evolvedPokemon = pokemonList.find((p) => p.id === id); // Utilisez pokemonList ici
     return isShiny ? evolvedPokemon.image_shiny : evolvedPokemon.image;
   };
-  const { t, i18n } = useTranslation();
-  const currentLang = i18n.language;
-    const lvl = t('lvl');
+  const getTypeNames = (typeIds, types, currentLang) => {
+    return typeIds.map((typeId) => {
+      const type = types.find((t) => t.id === typeId);
+  
+      if (currentLang === "fr") {
+        return type.name.fr;
+      } else if (currentLang === "en") {
+        return type.name.en;
+      } else {
+        return type.name;
+      }
+    }).join(', ');
+  };
+
+  const typesNames = getTypeNames(pokemon.types, types, currentLang);
     const evolve = t('evolve');
     const defSpe = t('defSpe');
     const atkSpe = t('atkSpe');
@@ -54,7 +72,7 @@ const Popup = ({ pokemon, onClose }) => {
           <p>{gen} : {pokemon.generation}</p>
           <p>{size} : {pokemon.height} m</p>
           <p>{weight} : {pokemon.weight} kg</p>
-          <p>{type} : {pokemon.types.map((typeId) => types.find((t) => t.id === typeId).name.en).join(', ')}</p>
+          <p>{type} : {typesNames}</p>
         </div>
 
         <div>
